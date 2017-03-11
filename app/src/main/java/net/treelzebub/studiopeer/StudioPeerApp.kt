@@ -14,7 +14,7 @@ class StudioPeerApp : Application() {
 
     val listener = FirebaseAuth.AuthStateListener {
         it.currentUser?.let {
-            // track whether the user is logged in or out
+            Log.d(TAG, "User is authed")
         } ?: Log.d(TAG, "User not authed")
     }
 

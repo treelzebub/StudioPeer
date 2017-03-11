@@ -26,3 +26,6 @@
 
 -keepattributes Signature
 -keepattributes *Annotation*
+-keepclassmembers class net.treelzebub.studiopeer.model.** {
+  *;
+}

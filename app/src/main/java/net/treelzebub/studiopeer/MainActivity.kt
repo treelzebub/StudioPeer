@@ -14,6 +14,14 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.ValueEventListener
+
+
+
+
 
 
 class MainActivity : FragmentActivity(), GoogleApiClient.OnConnectionFailedListener {
@@ -37,6 +45,9 @@ class MainActivity : FragmentActivity(), GoogleApiClient.OnConnectionFailedListe
                 .build()
     }
 
+    private var user: GoogleSignInAccount? = null
+
+    private val button by bindView<View>(R.id.button)
     private val signIn by bindView<View>(R.id.sign_in_button)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,15 +57,38 @@ class MainActivity : FragmentActivity(), GoogleApiClient.OnConnectionFailedListe
             val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
             startActivityForResult(signInIntent, REQUEST_SIGN_IN)
         }
+        button.setOnClickListener {
+            FirebaseAuth.getInstance().currentUser?.let {
+                // Write a message to the database
+                val database = FirebaseDatabase.getInstance()
+                val myRef = database.getReference("message") // TODO hold in state object
+                myRef.setValue("Hello, World!")
+
+                // Read from the database
+                myRef.addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        val value = dataSnapshot.getValue(String::class.java)
+                        Log.d(TAG, "Value is: " + value)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException())
+                    }
+                })
+            }
+        }
     }
 
     override fun onConnectionFailed(result: ConnectionResult) {
     }
 
-    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount) {
-        Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
+    private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + (account?.id ?: "null-id"))
         val auth = FirebaseAuth.getInstance()
-        val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+        val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this) {
                     task ->
@@ -64,9 +98,9 @@ class MainActivity : FragmentActivity(), GoogleApiClient.OnConnectionFailedListe
                     // the auth state listener will be notified and logic to handle the
                     // signed in user can be handled in the listener.
                     if (!task.isSuccessful) {
+                        this.user = account!!
                         Log.w(TAG, "signInWithCredential", task.exception)
-                        Toast.makeText(this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
                     }
                     // ...
                 }

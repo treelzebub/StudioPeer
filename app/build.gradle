@@ -25,8 +25,10 @@ dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     compile "com.google.android.gms:play-services-auth:$play_services"
     compile "com.google.firebase:firebase-auth:$play_services"
+    compile "com.google.firebase:firebase-database:$play_services"
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
+    compile "com.google.code.gson:gson:2.8.0"
 
     compile 'com.levelmoney.velodrome:velodrome:1.0'
 
