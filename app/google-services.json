@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "385749893053",
+    "firebase_url": "https://studiopeer-72c50.firebaseio.com",
+    "project_id": "studiopeer-72c50",
+    "storage_bucket": "studiopeer-72c50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:385749893053:android:4fe30ffb11a3eda0",
+        "android_client_info": {
+          "package_name": "net.treelzebub.studiopeer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "385749893053-kg9a8icl2gaogi3pgv5j7mjatjokv5bo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.treelzebub.studiopeer",
+            "certificate_hash": "f551c4cf427fff893fbf2eba8bc19233f7ec9a25"
+          }
+        },
+        {
+          "client_id": "385749893053-qgnman2t5l28muvqji9b4lc7cm4muktq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDvBLeffsK0U5M5tAkmNpM3P2ggm3clow"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "385749893053-qgnman2t5l28muvqji9b4lc7cm4muktq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
