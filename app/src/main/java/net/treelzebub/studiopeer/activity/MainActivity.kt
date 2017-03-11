@@ -1,8 +1,7 @@
-package net.treelzebub.studiopeer
+package net.treelzebub.studiopeer.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.FragmentActivity
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -14,20 +13,20 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageMetadata
+import net.treelzebub.studiopeer.R
+import net.treelzebub.studiopeer.TAG
+import net.treelzebub.studiopeer.activity.tracklist.TracklistActivity
+import net.treelzebub.studiopeer.bindView
 
 val FirebaseAuth.isAuthed: Boolean
     get() = currentUser != null
 
-class MainActivity : FragmentActivity(), GoogleApiClient.OnConnectionFailedListener {
+class MainActivity : StudioPeerActivity(false), GoogleApiClient.OnConnectionFailedListener {
 
     companion object {
         private const val REQUEST_SIGN_IN = 13
-        private const val TAG = "MainActivity"
     }
 
-    private val auth = FirebaseAuth.getInstance()
     private val gso by lazy {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -58,42 +57,7 @@ class MainActivity : FragmentActivity(), GoogleApiClient.OnConnectionFailedListe
             startActivityForResult(signInIntent, REQUEST_SIGN_IN)
         }
         button.setOnClickListener {
-            val storage = FirebaseStorage.getInstance()
-            val debugByteArray = byteArrayOf(1, 0, 3, 3, 71, 0x12, 0x79)
-            // Create a storage reference from our app
-            val storageRef = storage.reference
-            val fileRef = storageRef.child("my-bytes")
-            val metadata = StorageMetadata.Builder().setCustomMetadata("mine", "yes!").build()
-            val uploadTask = fileRef.putBytes(debugByteArray, metadata) // overwrites without prompt
-            uploadTask.addOnFailureListener {
-                // Handle unsuccessful uploads
-            }.addOnSuccessListener {
-                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
-                taskSnapshot ->
-                Log.d(TAG, "Bytes: "+taskSnapshot!!.metadata!!.sizeBytes + " " + taskSnapshot.downloadUrl.toString())
-            }
-
-//            FirebaseAuth.getInstance().currentUser?.let {
-//                // Write a message to the database
-//                val database = FirebaseDatabase.getInstance()
-//                val myRef = database.getReference("something") // TODO hold in state object
-//                myRef.setValue(SomeThing())
-//
-//                // Read from the database
-//                myRef.addValueEventListener(object : ValueEventListener {
-//                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                        // This method is called once with the initial value and again
-//                        // whenever data at this location is updated.
-//                        val value = dataSnapshot.getValue(ByteArray::class.java)
-//                        Log.d(TAG, "Value is not null: value != null")
-//                    }
-//
-//                    override fun onCancelled(error: DatabaseError) {
-//                        // Failed to read value
-//                        Log.w(TAG, "Failed to read value.", error.toException())
-//                    }
-//                })
-//            }
+            startActivity(Intent(this, TracklistActivity::class.java))
         }
     }
 
