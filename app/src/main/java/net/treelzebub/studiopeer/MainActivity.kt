@@ -14,15 +14,11 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageMetadata
 
-
-
-
-
+val FirebaseAuth.isAuthed: Boolean
+    get() = currentUser != null
 
 class MainActivity : FragmentActivity(), GoogleApiClient.OnConnectionFailedListener {
 
@@ -31,13 +27,13 @@ class MainActivity : FragmentActivity(), GoogleApiClient.OnConnectionFailedListe
         private const val TAG = "MainActivity"
     }
 
+    private val auth = FirebaseAuth.getInstance()
     private val gso by lazy {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build()
     }
-
     private val googleApiClient by lazy {
         GoogleApiClient.Builder(this)
                 .enableAutoManage(this, this)
@@ -45,40 +41,59 @@ class MainActivity : FragmentActivity(), GoogleApiClient.OnConnectionFailedListe
                 .build()
     }
 
-    private var user: GoogleSignInAccount? = null
-
     private val button by bindView<View>(R.id.button)
     private val signIn by bindView<View>(R.id.sign_in_button)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        if (auth.isAuthed) {
+            signIn.visibility = View.GONE
+            Toast.makeText(this, "Signed In!", Toast.LENGTH_SHORT).show()
+        }
+
         signIn.setOnClickListener {
             val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
             startActivityForResult(signInIntent, REQUEST_SIGN_IN)
         }
         button.setOnClickListener {
-            FirebaseAuth.getInstance().currentUser?.let {
-                // Write a message to the database
-                val database = FirebaseDatabase.getInstance()
-                val myRef = database.getReference("message") // TODO hold in state object
-                myRef.setValue("Hello, World!")
-
-                // Read from the database
-                myRef.addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-                        val value = dataSnapshot.getValue(String::class.java)
-                        Log.d(TAG, "Value is: " + value)
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException())
-                    }
-                })
+            val storage = FirebaseStorage.getInstance()
+            val debugByteArray = byteArrayOf(1, 0, 3, 3, 71, 0x12, 0x79)
+            // Create a storage reference from our app
+            val storageRef = storage.reference
+            val fileRef = storageRef.child("my-bytes")
+            val metadata = StorageMetadata.Builder().setCustomMetadata("mine", "yes!").build()
+            val uploadTask = fileRef.putBytes(debugByteArray, metadata) // overwrites without prompt
+            uploadTask.addOnFailureListener {
+                // Handle unsuccessful uploads
+            }.addOnSuccessListener {
+                // taskSnapshot.getMetadata() contains file metadata such as size, content-type, and download URL.
+                taskSnapshot ->
+                Log.d(TAG, "Bytes: "+taskSnapshot!!.metadata!!.sizeBytes + " " + taskSnapshot.downloadUrl.toString())
             }
+
+//            FirebaseAuth.getInstance().currentUser?.let {
+//                // Write a message to the database
+//                val database = FirebaseDatabase.getInstance()
+//                val myRef = database.getReference("something") // TODO hold in state object
+//                myRef.setValue(SomeThing())
+//
+//                // Read from the database
+//                myRef.addValueEventListener(object : ValueEventListener {
+//                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+//                        // This method is called once with the initial value and again
+//                        // whenever data at this location is updated.
+//                        val value = dataSnapshot.getValue(ByteArray::class.java)
+//                        Log.d(TAG, "Value is not null: value != null")
+//                    }
+//
+//                    override fun onCancelled(error: DatabaseError) {
+//                        // Failed to read value
+//                        Log.w(TAG, "Failed to read value.", error.toException())
+//                    }
+//                })
+//            }
         }
     }
 
@@ -87,7 +102,6 @@ class MainActivity : FragmentActivity(), GoogleApiClient.OnConnectionFailedListe
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + (account?.id ?: "null-id"))
-        val auth = FirebaseAuth.getInstance()
         val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
         auth.signInWithCredential(credential)
                 .addOnCompleteListener(this) {
@@ -98,7 +112,6 @@ class MainActivity : FragmentActivity(), GoogleApiClient.OnConnectionFailedListe
                     // the auth state listener will be notified and logic to handle the
                     // signed in user can be handled in the listener.
                     if (!task.isSuccessful) {
-                        this.user = account!!
                         Log.w(TAG, "signInWithCredential", task.exception)
                         Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
                     }
