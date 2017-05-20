@@ -46,7 +46,6 @@ class MainActivity : StudioPeerActivity(false), GoogleApiClient.OnConnectionFail
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         if (auth.isAuthed) {
             signIn.visibility = View.GONE
             Toast.makeText(this, "Signed In!", Toast.LENGTH_SHORT).show()

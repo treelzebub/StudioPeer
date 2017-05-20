@@ -20,7 +20,7 @@ class TracklistActivity : StudioPeerActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tracklist)
         setupRecycler()
-        
+
     }
 
     private fun setupRecycler() {

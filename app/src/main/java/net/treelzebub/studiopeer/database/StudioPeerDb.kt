@@ -1,6 +1,45 @@
 package net.treelzebub.studiopeer.database
 
+import android.util.Log
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import net.treelzebub.studiopeer.TAG
+import net.treelzebub.studiopeer.debug.StudioPeerGson
+import java.lang.Thread.sleep
+
+// Pass types that correspond to the available JSON types as follows:
+//   String
+//   Long
+//   Double
+//   Boolean
+//   Map<String, Object>
+//   List<Object>
+//
+// Pass a custom Java object, if the class that defines it has a default constructor
+// that takes no arguments and has public getters for the properties to be assigned.
 object StudioPeerDb {
+
+    private const val KEY_SUPERUSERS = "superusers"
+
+    private val db = FirebaseDatabase.getInstance()
+
+    fun getSuperusers() {
+        val superusers = db.getReference(KEY_SUPERUSERS)!!
+        superusers.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Log.d(TAG, snapshot.toString())
+            }
+            override fun onCancelled(p0: DatabaseError) {
+                StudioPeerGson.debugLog(TAG, p0)
+                throw IllegalStateException()
+            }
+        })
+        // TODO this looks pretty cool:
+        //    https://github.com/nmoskalenko/RxFirebase
+    }
+
     //            FirebaseAuth.getInstance().currentUser?.let {
 //                // Write a message to the database
 //                val database = FirebaseDatabase.getInstance()
