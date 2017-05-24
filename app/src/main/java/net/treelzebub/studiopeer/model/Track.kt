@@ -3,7 +3,7 @@ package net.treelzebub.studiopeer.model
 interface Track : Identifiable {
 
     /**
-     * A unique identifier
+     * A unique identifier.
      */
     override val id: String
 
@@ -13,7 +13,7 @@ interface Track : Identifiable {
     val artist: String
 
     /**
-     * Title of the Track.
+     * Title of this [Track].
      */
     val title: String
 
@@ -33,7 +33,7 @@ interface Track : Identifiable {
     val size: Long
 
     /**
-     * Time at which this was last updated, in UTC milliseconds since the epoch.
+     * Time at which this [Track] was last updated. Milliseconds since the epoch.
      */
     val lastUpdated: Long
 }
