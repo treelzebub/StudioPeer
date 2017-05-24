@@ -31,8 +31,8 @@ object StudioPeerDb {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.d(TAG, snapshot.toString())
             }
-            override fun onCancelled(p0: DatabaseError) {
-                StudioPeerGson.debugLog(TAG, p0)
+            override fun onCancelled(error: DatabaseError) {
+                StudioPeerGson.debugLog(TAG, error)
                 throw IllegalStateException()
             }
         })

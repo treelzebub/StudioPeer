@@ -1,15 +1,39 @@
 package net.treelzebub.studiopeer.model
 
-interface Track {
+interface Track : Identifiable {
 
-    val id: Long
+    /**
+     * A unique identifier
+     */
+    override val id: String
 
+    /**
+     * The recording artist associated with this Track.
+     */
     val artist: String
-    val title: String
-    val time: String // The length of the song HH:MM:SS:mm
-    val size: Long
-    val lastUpdated: Long // TODO joda
 
-    val position: Int
-    val comments: List<Comment>
+    /**
+     * Title of the Track.
+     */
+    val title: String
+
+    /**
+     * Position in sequence.
+     */
+    val number: Int
+
+    /**
+     * Length in milliseconds.
+     */
+    val length: Int
+
+    /**
+     * File size in bytes.
+     */
+    val size: Long
+
+    /**
+     * Time at which this was last updated, in UTC milliseconds since the epoch.
+     */
+    val lastUpdated: Long
 }
