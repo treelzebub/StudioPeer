@@ -11,7 +11,6 @@ import net.treelzebub.studiopeer.android.users.User
 import org.joda.time.DateTime
 import java.io.File
 
-
 /**
  * Created by Tre Murillo on 5/28/17
  */
@@ -48,14 +47,14 @@ object StudioPeerPrefs {
 
     fun userPrefs(context: Context): SharedPreferences {
         return StudioPeerUsers.user?.let {
-            context.getSharedPreferences("" + it.uid, Context.MODE_PRIVATE)
+            context.getSharedPreferences("" + it.id, Context.MODE_PRIVATE)
         } ?: throw NoUserException("No User for userPrefs")
     }
 
 
     @JvmOverloads
     fun userPrefsNonNull(context: Context, user: User = StudioPeerUsers.user!!): SharedPreferences {
-        return context.getSharedPreferences("" + user.uid, Context.MODE_PRIVATE)
+        return context.getSharedPreferences("" + user.id, Context.MODE_PRIVATE)
     }
 
     fun userEditor(context: Context): Editor? {
@@ -73,7 +72,7 @@ object StudioPeerPrefs {
     }
 
     fun deleteUserPrefs(context: Context, user: User): Boolean {
-        return deletePrefs(context, "" + user.uid)
+        return deletePrefs(context, "" + user.id)
     }
 
     @SuppressLint("ApplySharedPref")

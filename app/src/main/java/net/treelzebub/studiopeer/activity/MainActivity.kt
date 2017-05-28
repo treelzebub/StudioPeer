@@ -18,19 +18,12 @@ import net.treelzebub.studiopeer.TAG
 import net.treelzebub.studiopeer.activity.tracklist.TracklistActivity
 import net.treelzebub.studiopeer.auth.AuthState
 import net.treelzebub.studiopeer.bindView
-import net.treelzebub.studiopeer.lifecycle.StudioPeerAuthListener
 
 class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedListener {
 
     companion object {
-        private const val REQUEST_SIGN_IN = 13
+        private const val REQUEST_SIGN_IN = 0x13
     }
-
-    override val isSecure = true
-    override val authListener
-            = StudioPeerAuthListener(this, lifecycle, isSecure) {
-
-            }
 
     private val gso by lazy {
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

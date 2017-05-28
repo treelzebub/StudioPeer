@@ -1,35 +1,25 @@
 package net.treelzebub.studiopeer.lifecycle
 
-import android.arch.lifecycle.Lifecycle
-import android.arch.lifecycle.LifecycleObserver
-import android.arch.lifecycle.OnLifecycleEvent
+import android.content.Context
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
-import net.treelzebub.studiopeer.activity.StudioPeerActivity
+import net.treelzebub.studiopeer.TAG
+import net.treelzebub.studiopeer.android.users.StudioPeerUsers
 import net.treelzebub.studiopeer.auth.isAuthed
 import net.treelzebub.studiopeer.contract.Intents
 
 /**
  * Created by Tre Murillo on 5/27/17
  */
-class StudioPeerAuthListener(
-        private val a: StudioPeerActivity,
-        private val lifecycle: Lifecycle,
-        private val isSecure: Boolean,
-        private val callback: () -> Unit
-) : LifecycleObserver {
+class StudioPeerAuthListener(private val c: Context) : FirebaseAuth.AuthStateListener {
 
-    private val auth = FirebaseAuth.getInstance()
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_START)
-    fun onStart() {
-        if (isSecure && !auth.isAuthed) {
-            a.startActivity(Intents.welcome(a))
-            a.finish()
+    override fun onAuthStateChanged(auth: FirebaseAuth) {
+        if (auth.isAuthed) {
+            StudioPeerUsers.onLogIn(auth.currentUser!!)?.addOnCompleteListener {
+                Log.d(TAG, "Database write complete for user: ${auth.currentUser!!.uid}")
+            }
+        } else {
+            c.startActivity(Intents.welcome(c, true))
         }
-    }
-
-    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
-    fun onStop() {
-
     }
 }

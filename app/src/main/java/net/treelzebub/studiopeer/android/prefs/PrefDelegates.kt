@@ -1,7 +1,7 @@
 package net.treelzebub.studiopeer.android.prefs
 
 import android.annotation.SuppressLint
-import net.treelzebub.studiopeer.StudioPeerApplication
+import net.treelzebub.studiopeer.StudioPeer
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
@@ -16,7 +16,7 @@ inline fun <reified T: Any> sharedPref(key: String? = null, global: Boolean = fa
 
 class PrefDelegate<T: Any>(private val cls: Class<T>, val key: String?, val global: Boolean) : ReadWriteProperty<Any, T?> {
 
-    private val context = StudioPeerApplication.context
+    private val context = StudioPeer.context
     private val sharedPrefs = context.sharedPrefs()
 
     /**
