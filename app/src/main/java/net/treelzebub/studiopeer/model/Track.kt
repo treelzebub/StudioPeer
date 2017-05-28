@@ -1,11 +1,12 @@
 package net.treelzebub.studiopeer.model
 
-interface Track : Identifiable {
+interface Track : Identifiable, Timestamped {
 
     /**
-     * A unique identifier.
+     * [Track]s may have different versions. For instance, there may be a few recordings of a
+     * particular song, which [Member]s want to compare.
      */
-    override val id: String
+    val otherVersionTrackIds: List<String>
 
     /**
      * The recording artist associated with this Track.
