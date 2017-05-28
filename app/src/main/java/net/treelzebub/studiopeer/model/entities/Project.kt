@@ -1,4 +1,6 @@
-package net.treelzebub.studiopeer.model
+package net.treelzebub.studiopeer.model.entities
+
+import net.treelzebub.studiopeer.model.DatabaseObject
 
 /**
  * Created by Tre Murillo on 5/27/17
@@ -7,7 +9,7 @@ package net.treelzebub.studiopeer.model
  * recording artists. Engineer [Member]s are Administrators, and can add/remove [Track]s, and invite
  * artist [Member]s to the [Project].
  */
-interface Project : Identifiable, Timestamped {
+interface Project : DatabaseObject {
 
     /**
      * Name of this [Project], for display.
