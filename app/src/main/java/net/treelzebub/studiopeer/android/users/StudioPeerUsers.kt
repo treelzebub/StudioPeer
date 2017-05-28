@@ -7,6 +7,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import net.treelzebub.studiopeer.TAG
+import net.treelzebub.studiopeer.database.CollectionTypeIndicators
 import net.treelzebub.studiopeer.database.StudioPeerDb
 
 
@@ -24,8 +25,7 @@ object StudioPeerUsers {
     fun getAll() {
         StudioPeerDb.read(path, object : ValueEventListener {
             override fun onDataChange(data: DataSnapshot) {
-                val users = data.getValue(StudioPeerDb.usersTypeIndicator)
-                val temp = ""
+                val users = data.getValue(CollectionTypeIndicators.getAllUsers)
             }
 
             override fun onCancelled(error: DatabaseError) {

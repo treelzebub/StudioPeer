@@ -3,19 +3,15 @@ package net.treelzebub.studiopeer.database
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ValueEventListener
-import net.treelzebub.studiopeer.android.users.User
 import net.treelzebub.studiopeer.model.DatabaseObject
 import net.treelzebub.studiopeer.time.DateTimes
 
 
-typealias UsersMap = Map<String, @JvmSuppressWildcards User>
-
+/**
+ * Created by Tre Murillo on 5/28/17
+ */
 object StudioPeerDb {
-
-    val usersTypeIndicator = object : GenericTypeIndicator<UsersMap>() {}
-
 
     private val db = FirebaseDatabase.getInstance()
     private val reference: DatabaseReference
