@@ -12,6 +12,12 @@ import net.treelzebub.studiopeer.model.DatabaseObject
 interface Chat : DatabaseObject {
 
     /**
+     * The time at which the [channel] was last updated. Updated on every [Message] push, satisfied
+     * by FirebaseDatabase. Milliseconds since the epoch.
+     */
+    override var lastUpdatedAt: Long
+
+    /**
      * ID of the [Track] associated with this [Chat]. The title of this [Track] is used as the
      * title of this [Chat].
      */
@@ -23,13 +29,7 @@ interface Chat : DatabaseObject {
     var memberIds: List<String>
 
     /**
-     * The time at which the [channel] was last updated. Updated on every [Message] push, satisfied
-     * by FirebaseDatabase. Milliseconds since the epoch.
-     */
-    override var lastUpdatedAt: Long
-
-    /**
      * The most recent message posted in the channel, or the empty String, if there are no [Message]s.
      */
-    var lastMessage: CharSequence
+    var lastMessage: String
 }

@@ -5,17 +5,13 @@ import net.treelzebub.studiopeer.model.DatabaseObject
 interface Track : DatabaseObject {
 
     /**
-     * TODO
      * [Track]s may have different versions. For instance, there may be a few recordings of a
      * particular song, which [Member]s want to compare.
+     *
+     * This is a Map of filename to title (for display). Since the filename is guaranteed unique,
+     * it will serve as each recording's identifier.
      */
-//    var otherVersionTrackIds: List<String>
-    /**
-     * TODO
-     * If [otherVersionTrackIds] is empty, this is `true`. Otherwise, only one
-     */
-//    var isPrimaryVersion: Boolean
-
+    var versions: Map<String, String>
 
     /**
      * The recording artist associated with this Track.
