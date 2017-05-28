@@ -17,6 +17,7 @@ import net.treelzebub.studiopeer.database.StudioPeerDb
 object StudioPeerUsers {
 
     private const val path = "users"
+    private val dbRef = StudioPeerDb.reference(path)
 
     var mockUser: User? = null
     var user: User? = null //mockUser //?: FirebaseAuth.getInstance().currentUser?.let { /*StudioPeerUser.create(it)*/ }
@@ -44,5 +45,4 @@ object StudioPeerUsers {
     }
 
     private fun write(user: User): Task<Void> = StudioPeerDb.write(path, user)
-
 }

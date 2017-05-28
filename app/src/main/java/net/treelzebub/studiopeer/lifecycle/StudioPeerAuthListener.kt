@@ -8,6 +8,7 @@ import net.treelzebub.studiopeer.android.users.StudioPeerUsers
 import net.treelzebub.studiopeer.auth.isAuthed
 import net.treelzebub.studiopeer.contract.Intents
 
+
 /**
  * Created by Tre Murillo on 5/27/17
  */
@@ -16,7 +17,7 @@ class StudioPeerAuthListener(private val c: Context) : FirebaseAuth.AuthStateLis
     override fun onAuthStateChanged(auth: FirebaseAuth) {
         if (auth.isAuthed) {
             StudioPeerUsers.onLogIn(auth.currentUser!!)?.addOnCompleteListener {
-                Log.d(TAG, "Database write complete for user: ${auth.currentUser!!.uid}")
+                Log.d(TAG, "Successfully wrote user: ${auth.currentUser!!.uid}")
             }
         } else {
             c.startActivity(Intents.welcome(c, true))
