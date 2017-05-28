@@ -16,15 +16,14 @@ import com.google.firebase.auth.GoogleAuthProvider
 import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.TAG
 import net.treelzebub.studiopeer.activity.tracklist.TracklistActivity
+import net.treelzebub.studiopeer.android.users.StudioPeerUsers
+import net.treelzebub.studiopeer.auth.AuthState
 import net.treelzebub.studiopeer.bindView
 
-val FirebaseAuth.isAuthed: Boolean
-    get() = currentUser != null
-
-class MainActivity : StudioPeerActivity(false), GoogleApiClient.OnConnectionFailedListener {
+class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedListener {
 
     companion object {
-        private const val REQUEST_SIGN_IN = 13
+        private const val REQUEST_SIGN_IN = 0x13
     }
 
     private val gso by lazy {
@@ -46,7 +45,7 @@ class MainActivity : StudioPeerActivity(false), GoogleApiClient.OnConnectionFail
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        if (auth.isAuthed) {
+        if (AuthState.isAuthed) {
             signIn.visibility = View.GONE
             Toast.makeText(this, "Signed In!", Toast.LENGTH_SHORT).show()
         }
@@ -56,7 +55,7 @@ class MainActivity : StudioPeerActivity(false), GoogleApiClient.OnConnectionFail
             startActivityForResult(signInIntent, REQUEST_SIGN_IN)
         }
         button.setOnClickListener {
-            startActivity(Intent(this, TracklistActivity::class.java))
+            StudioPeerUsers.getAll()
         }
     }
 
@@ -66,7 +65,7 @@ class MainActivity : StudioPeerActivity(false), GoogleApiClient.OnConnectionFail
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         Log.d(TAG, "firebaseAuthWithGoogle:" + (account?.id ?: "null-id"))
         val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
-        auth.signInWithCredential(credential)
+        FirebaseAuth.getInstance().signInWithCredential(credential)
                 .addOnCompleteListener(this) {
                     task ->
                     Log.d(TAG, "signInWithCredential:onComplete:" + task.isSuccessful)

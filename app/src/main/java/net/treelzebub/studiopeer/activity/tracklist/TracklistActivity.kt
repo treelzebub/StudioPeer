@@ -7,11 +7,8 @@ import android.support.v7.widget.RecyclerView
 import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.activity.StudioPeerActivity
 import net.treelzebub.studiopeer.bindView
-import net.treelzebub.studiopeer.storage.StudioPeerStorage
 
 class TracklistActivity : StudioPeerActivity() {
-
-    private val storage = StudioPeerStorage
 
     private val recycler by bindView<RecyclerView>(R.id.recycler)
     private val adapter  = TrackAdapter()

@@ -1,6 +1,6 @@
 package net.treelzebub.studiopeer.model.impls
 
-import com.google.firebase.database.IgnoreExtraProperties
+import net.treelzebub.studiopeer.database.StudioPeerDb
 import net.treelzebub.studiopeer.model.DatabaseObject.Companion.DEFAULT_LONG
 import net.treelzebub.studiopeer.model.DatabaseObject.Companion.DEFAULT_STRING
 import net.treelzebub.studiopeer.model.entities.Message
@@ -10,7 +10,6 @@ import net.treelzebub.studiopeer.model.entities.Message
  * Created by Tre Murillo on 5/27/17
  */
 
-@IgnoreExtraProperties
 data class TextMessage(
         override var id: String          = DEFAULT_STRING,
         override var userId: String      = DEFAULT_STRING,
@@ -20,11 +19,10 @@ data class TextMessage(
         /**
          * Text content entered by the user. A regular ol' chat message.
          */
-        var text: CharSequence           = DEFAULT_STRING
+        var text: String                 = DEFAULT_STRING
 ) : Message
 
 // https://firebase.google.com/docs/storage/android/download-files
-@IgnoreExtraProperties
 data class AttachmentMessage(
         override var id: String          = DEFAULT_STRING,
         override var userId: String      = DEFAULT_STRING,
@@ -42,8 +40,8 @@ data class AttachmentMessage(
         val filename: String             = DEFAULT_STRING
 ) : Message {
     /**
-     * Pass this to StorageReference.child(), then call getFile().
+     * Pass this to [StudioPeerDb]'s CRUD as the path argument, then call getFile().
      */
-    val child: String
+    val path: String
         get() = "$dir/$filename"
 }

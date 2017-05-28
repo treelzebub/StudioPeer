@@ -31,7 +31,7 @@ interface Track : DatabaseObject {
     /**
      * Length in milliseconds.
      */
-    var length: Int
+    var length: Long
 
     /**
      * File size in bytes.
