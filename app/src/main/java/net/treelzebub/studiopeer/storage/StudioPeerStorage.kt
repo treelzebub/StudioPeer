@@ -1,40 +1,39 @@
 package net.treelzebub.studiopeer.storage
 
+import android.content.Context
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.TAG
 
 // assumes authed user... TODO
 object StudioPeerStorage {
 
-    private val HOME: String = FirebaseAuth.getInstance().currentUser!!.email!! + "/"
 
     private val storage = FirebaseStorage.getInstance()
 
-    fun reference(filename: String): StorageReference {
-        return storage.reference.child("$HOME$filename")
-    }
+    private fun home(c: Context) = c.getString(R.string.studio_peer_home_directory)
 
-    fun dir() {
-        storage.getReference(HOME)
+    fun reference(c: Context, filename: String): StorageReference {
+        return storage.reference.child("${home(c)}/$filename")
     }
 
     /**
      * Overwrites without prompt
      */
-    fun upload(filename: String, bytes: ByteArray, metadata: StorageMetadata?): UploadTask {
+    fun upload(c: Context, filename: String, bytes: ByteArray, metadata: StorageMetadata?): UploadTask {
         val task = if (metadata != null) {
-            reference(filename).putBytes(bytes, metadata)
+            reference(c, filename).putBytes(bytes, metadata)
         } else {
-            reference(filename).putBytes(bytes)
+            reference(c, filename).putBytes(bytes)
         }
         return task.apply {
             addOnSuccessListener {
-                Log.d(TAG, "Success! URL: ${it!!.metadata!!.downloadUrl}")
+                Log.d(TAG, "Success! URL: ${it!!.downloadUrl!!}")
             }.addOnFailureListener {
                 Log.d(TAG, "Fail! URL: ${it.message}")
             }

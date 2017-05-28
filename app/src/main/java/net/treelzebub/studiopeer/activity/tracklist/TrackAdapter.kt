@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.bindView
-import net.treelzebub.studiopeer.model.Track
+import net.treelzebub.studiopeer.model.entities.Track
 
 class TrackAdapter : RecyclerView.Adapter<TrackAdapter.TrackHolder>() {
 
