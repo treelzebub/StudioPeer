@@ -10,7 +10,7 @@ interface DatabaseObject : Identifiable, Timestamped {
         const val DEFAULT_INT     = -1
         const val DEFAULT_BOOLEAN = false
 
-        fun <T> defaultList() = listOf<T>()
+        fun <T> defaultList()   = listOf<T>()
         fun <K, V> defaultMap() = mapOf<K, V>()
     }
 }

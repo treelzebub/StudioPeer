@@ -23,11 +23,11 @@ object StudioPeerDb {
     private val reference: DatabaseReference
         get() = db.reference
 
-    fun <T : DatabaseObject> write(child: String, obj: T, onComplete: () -> Unit): Task<Void> {
+    fun <T : DatabaseObject> write(path: String, obj: T, onComplete: () -> Unit): Task<Void> {
         // TODO it'd be a whole lot cooler to have the db fill the lastUpdatedAt field, but then
         //      we'd have to read from the db after every write...hmmmmmm
         obj.lastUpdatedAt = DateTimes.now
-        return reference.child(child).child(obj.id).setValue(obj).addOnCompleteListener { onComplete() }
+        return reference.child(path).child(obj.id).setValue(obj).addOnCompleteListener { onComplete() }
     }
 
 

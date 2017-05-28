@@ -1,6 +1,5 @@
 package net.treelzebub.studiopeer.model.impls
 
-import com.google.firebase.database.IgnoreExtraProperties
 import net.treelzebub.studiopeer.model.DatabaseObject.Companion.DEFAULT_BOOLEAN
 import net.treelzebub.studiopeer.model.DatabaseObject.Companion.DEFAULT_LONG
 import net.treelzebub.studiopeer.model.DatabaseObject.Companion.DEFAULT_STRING
@@ -10,8 +9,6 @@ import net.treelzebub.studiopeer.model.entities.Member
 /**
  * Created by Tre Murillo on 5/27/17
  */
-
-@IgnoreExtraProperties
 data class StudioPeerMember(
         override var id: String               = DEFAULT_STRING,
         override var createdAt: Long          = DEFAULT_LONG,

@@ -1,10 +1,16 @@
 package net.treelzebub.studiopeer
 
 import android.app.Application
+import android.content.Context
 
-class StudioPeerApp : Application() {
+class StudioPeerApplication : Application() {
+
+    companion object {
+        lateinit var context: Context
+    }
 
     override fun onCreate() {
         super.onCreate()
+        context = this
     }
 }

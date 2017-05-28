@@ -15,7 +15,7 @@ class TrackAdapter : RecyclerView.Adapter<TrackAdapter.TrackHolder>() {
 
     var tracks = listOf<Track>()
         set(value) {
-            field = value.sortedByDescending { it.lastUpdated }
+            field = value.sortedByDescending { it.lastUpdatedAt }
             notifyDataSetChanged()
         }
 
@@ -29,7 +29,7 @@ class TrackAdapter : RecyclerView.Adapter<TrackAdapter.TrackHolder>() {
         holder.apply {
             artist.text = track.artist
             title.text  = track.title
-            time.text   = track.time
+            time.text   = "${track.length}" // TODO format millis to HH:MM:SS.mm
         }
     }
 
@@ -37,7 +37,7 @@ class TrackAdapter : RecyclerView.Adapter<TrackAdapter.TrackHolder>() {
 
     override fun getItemViewType(position: Int) = 0
 
-    override fun getItemId(position: Int) = tracks[position].id
+    override fun getItemId(position: Int) = 0L
 
     class TrackHolder(v: View) : RecyclerView.ViewHolder(v) {
         val artist by bindView<TextView>(R.id.artist)

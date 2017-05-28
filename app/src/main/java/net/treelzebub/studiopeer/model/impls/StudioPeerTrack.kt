@@ -17,6 +17,6 @@ class StudioPeerTrack(
     override var artist: String                = DEFAULT_STRING,
     override var versions: Map<String, String> = defaultMap(),
     override var number: Int                   = DEFAULT_INT,
-    override var length: Int                   = DEFAULT_INT,
+    override var length: Long                  = DEFAULT_LONG,
     override var size: Long                    = DEFAULT_LONG
 ) : Track
