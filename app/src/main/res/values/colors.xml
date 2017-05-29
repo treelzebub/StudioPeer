@@ -10,6 +10,7 @@
 
     <color name="text_dark">@color/grey_950</color>
     <color name="text_light">@color/grey_600</color>
+    <color name="text_lightest">@color/grey_400</color>
 
     <!-- END used colors -->
 
