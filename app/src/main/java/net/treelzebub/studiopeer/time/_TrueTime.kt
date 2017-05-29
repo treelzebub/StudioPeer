@@ -19,7 +19,7 @@ import kotlinx.coroutines.experimental.launch
  * https://github.com/instacart/truetime-android
  */
 private var tries = 0
-private val TAG = "TrueTime"
+private const val TAG = "TrueTime"
 fun TrueTime.initAsync() {
     val deferred = launch(CommonPool) {
         Log.d(TAG, "init...")

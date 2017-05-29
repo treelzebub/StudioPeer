@@ -12,18 +12,17 @@ import net.treelzebub.studiopeer.android.users.StudioPeerUsers
 import net.treelzebub.studiopeer.database.CollectionTypeIndicators
 import net.treelzebub.studiopeer.model.impls.TextMessage
 import net.treelzebub.studiopeer.view.picasso.CircleTransform
-import org.joda.time.LocalTime
 
 /**
  * Created by Tre Murillo on 5/28/17
+ *
+ * TODO Group messages within 5 mins of each other for same user.
  */
 class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Adapter<ChatAdapter.VH>() {
 
     init { setHasStableIds(true) }
 
     private var list = listOf<TextMessage>()
-
-//    fun localTime(ts: Long) = LocalTime(ts)
 
     fun set(snapshot: DataSnapshot) {
         val count = snapshot.childrenCount
