@@ -22,6 +22,8 @@ object StudioPeerEnv {
         val isFinal: Boolean
         val isGenymotion: Boolean
         val testFramework: TestFramework?
+        val isTest: Boolean
+            get() = testFramework != null
 
         enum class TestFramework {
             Robolectric,
