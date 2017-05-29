@@ -19,6 +19,7 @@ import net.treelzebub.studiopeer.TAG
 import net.treelzebub.studiopeer.activity.chat.StudioPeerChatActivity
 import net.treelzebub.studiopeer.auth.AuthState
 import net.treelzebub.studiopeer.auth.StudioPeerAuth
+import net.treelzebub.studiopeer.view.onNextLayout
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
@@ -32,11 +33,12 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
+                .requestId()
                 .build()
     }
     private val googleApiClient by lazy {
         GoogleApiClient.Builder(this)
-//                .enableAutoManage(this, this)
+                .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
     }
@@ -44,8 +46,9 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         if (AuthState.isAuthed) {
-            sign_in.setGone()
+            hideSignIn()
             toast("Signed In!")
         }
 
@@ -62,7 +65,7 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
     }
 
     override fun onConnectionFailed(result: ConnectionResult) {
-        toast("Connection Failed")
+        toast("Network failure.")
     }
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
@@ -86,10 +89,11 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
 
     private fun handleSignInResult(result: GoogleSignInResult) {
         Log.d(TAG, "Sign in successful: ${result.isSuccess}")
-        if (!result.isSuccess) Log.d(TAG, GsonBuilder().setPrettyPrinting().create().toJson(result))
+        if (!result.isSuccess) Log.d(TAG, result.status.statusMessage)
         result.signInAccount?.let {
-            Log.d(TAG, it.displayName + " " + it.email)
+            Log.d(TAG, "Got user. Logging into Firebase.")
             firebaseAuthWithGoogle(it)
+            hideSignIn()
         } ?: toast("Sign in failed.")
     }
 
@@ -100,4 +104,7 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
             handleSignInResult(result)
         }
     }
+
+    private fun hideSignIn() = onNextLayout { sign_in.setGone() }
+
 }
