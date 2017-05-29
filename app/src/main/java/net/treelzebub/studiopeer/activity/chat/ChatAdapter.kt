@@ -12,6 +12,7 @@ import net.treelzebub.studiopeer.android.users.StudioPeerUsers
 import net.treelzebub.studiopeer.database.CollectionTypeIndicators
 import net.treelzebub.studiopeer.model.impls.TextMessage
 import net.treelzebub.studiopeer.view.picasso.CircleTransform
+import org.joda.time.LocalTime
 
 /**
  * Created by Tre Murillo on 5/28/17
@@ -22,6 +23,8 @@ class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Ad
 
     private var list = listOf<TextMessage>()
 
+//    fun localTime(ts: Long) = LocalTime(ts)
+
     fun set(snapshot: DataSnapshot) {
         val count = snapshot.childrenCount
         if (count == 0L) return
@@ -29,8 +32,9 @@ class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Ad
         list = new.values
                 .sortedBy { it.createdAt }
                 .toMutableList()
-        notifyDataSetChanged()
-        scrollToPosition(list.lastIndex)
+        val last = list.lastIndex
+        notifyItemInserted(last)
+        scrollToPosition(last)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
