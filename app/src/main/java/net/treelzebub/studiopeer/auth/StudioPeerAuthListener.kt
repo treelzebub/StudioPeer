@@ -14,12 +14,20 @@ import net.treelzebub.studiopeer.contract.Intents
 class StudioPeerAuthListener(private val c: Context) : FirebaseAuth.AuthStateListener {
 
     override fun onAuthStateChanged(auth: FirebaseAuth) {
+        try {
+            checkReauth(auth)
+        } catch (e: Exception) {
+            login()
+        }
+    }
+
+    private fun checkReauth(auth: FirebaseAuth) {
         if (auth.isAuthed) {
             StudioPeerUsers.onLogIn(auth.currentUser!!)?.addOnCompleteListener {
                 Log.d(TAG, "Successfully wrote user: ${auth.currentUser!!.uid}")
             }
-        } else {
-            c.startActivity(Intents.welcome(c, true))
-        }
+        } else login()
     }
+
+    private fun login() = c.startActivity(Intents.welcome(c, true))
 }

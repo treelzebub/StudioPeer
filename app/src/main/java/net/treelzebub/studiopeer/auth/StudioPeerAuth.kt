@@ -13,6 +13,8 @@ object StudioPeerAuth {
 
     private val auth = FirebaseAuth.getInstance()
 
+    // TODO move login shit from MainActivity.
+
     fun listen(listener: FirebaseAuth.AuthStateListener) {
         auth.addAuthStateListener(listener)
     }
@@ -20,4 +22,6 @@ object StudioPeerAuth {
     fun unlisten(listener: FirebaseAuth.AuthStateListener) {
         auth.removeAuthStateListener(listener)
     }
+
+    fun logOut() = auth.signOut()
 }

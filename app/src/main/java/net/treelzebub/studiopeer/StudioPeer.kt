@@ -7,6 +7,7 @@ import net.treelzebub.studiopeer.auth.StudioPeerAuth
 import net.treelzebub.studiopeer.auth.StudioPeerAuthListener
 import net.treelzebub.studiopeer.env.DevelopEnv
 import net.treelzebub.studiopeer.env.StudioPeerEnv
+import net.treelzebub.studiopeer.runtime.Stability
 
 /**
  * Created by Tre Murillo on 5/28/17
@@ -27,6 +28,9 @@ object StudioPeer {
         if (isInit) throw RuntimeException("StudioPeer has already been initialized.")
         isInit = true
         context = app
+        Stability.onCrashLoop {
+            StudioPeerAuth.logOut()
+        }
         StudioPeerEnv.init(DevelopEnv(BuildConfig::class.java))
         if (!StudioPeerEnv.instance.isTest) {
             JodaTimeAndroid.init(app)

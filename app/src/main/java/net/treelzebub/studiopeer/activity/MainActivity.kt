@@ -3,7 +3,6 @@ package net.treelzebub.studiopeer.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -19,6 +18,7 @@ import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.TAG
 import net.treelzebub.studiopeer.activity.chat.StudioPeerChatActivity
 import net.treelzebub.studiopeer.auth.AuthState
+import net.treelzebub.studiopeer.auth.StudioPeerAuth
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
 
@@ -57,7 +57,7 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
             startActivity<StudioPeerChatActivity>()
         }
         sign_out.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
+            StudioPeerAuth.logOut()
         }
     }
 
