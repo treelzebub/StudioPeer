@@ -14,27 +14,26 @@ import net.treelzebub.studiopeer.model.impls.TextMessage
 /**
  * Created by Tre Murillo on 5/28/17
  */
+class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Adapter<ChatAdapter.VH>() {
 
-class ChatAdapter : RecyclerView.Adapter<ChatAdapter.VH>() {
-
-    private var list: List<TextMessage> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+    private var list = listOf<TextMessage>()
 
     fun set(snapshot: DataSnapshot) {
         list = snapshot.getValue(CollectionTypeIndicators.getTextMessages)
                 .values
-                .toList()
-                .sortedByDescending { it.createdAt }
+                .sortedBy { it.createdAt }
+                .toMutableList()
+        notifyDataSetChanged()
+        scrollToPosition(list.lastIndex)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): VH {
         return VH(parent.inflate(R.layout.item_text_message_sent))
     }
 
-    override fun onBindViewHolder(holder: VH, position: Int) = holder.set(list[position])
+    override fun onBindViewHolder(holder: VH, position: Int) {
+        holder.set(list[position])
+    }
 
     override fun getItemCount() = list.size
 

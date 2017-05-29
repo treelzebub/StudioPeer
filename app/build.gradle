@@ -45,6 +45,7 @@ dependencies {
     compile 'com.levelmoney.velodrome:velodrome:1.0'
     compile 'com.github.treelzebub:knapsack:0.3'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'jp.wasabeef:recyclerview-animators:2.2.6'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
