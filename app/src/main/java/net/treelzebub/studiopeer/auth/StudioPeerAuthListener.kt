@@ -17,6 +17,7 @@ class StudioPeerAuthListener(private val c: Context) : FirebaseAuth.AuthStateLis
         try {
             checkReauth(auth)
         } catch (e: Exception) {
+            Log.e(TAG, "Caught Exception", e)
             login()
         }
     }

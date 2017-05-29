@@ -41,7 +41,7 @@ fun <T : Any> SharedPreferences.getGeneric(key: String, clazz: Class<T>): T? {
     return when(clazz) {
         String::class.java, java.lang.String::class.java    -> getString(key, null)
         Long::class.java, java.lang.Long::class.java        -> getLong(key, 0L)
-        Int::class.java, java.lang.Integer::class.java      -> getLong(key, 0L).toInt()
+        Int::class.java, java.lang.Integer::class.java      -> getInt(key, 0)
         Float::class.java, java.lang.Float::class.java      -> getFloat(key, 0f)
         Boolean::class.java, java.lang.Boolean::class.java  -> getBoolean(key, false)
         else                                                -> throw IllegalArgumentException("Cannot handle class: " + clazz)

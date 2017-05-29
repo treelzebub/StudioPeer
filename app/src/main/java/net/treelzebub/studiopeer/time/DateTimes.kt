@@ -1,6 +1,6 @@
 package net.treelzebub.studiopeer.time
 
-import org.joda.time.DateTime
+import com.instacart.library.truetime.TrueTime
 import org.joda.time.LocalTime
 import org.joda.time.format.DateTimeFormat
 
@@ -10,7 +10,7 @@ import org.joda.time.format.DateTimeFormat
 object DateTimes {
 
     val now: Long
-        get() = DateTime().millis
+        get() = TrueTime.now().time
 
     fun localTime(millis: Long? = null) = LocalTime(millis)
 
