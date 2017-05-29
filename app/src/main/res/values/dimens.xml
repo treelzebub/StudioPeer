@@ -18,7 +18,7 @@
     <dimen name="elevation_high">6dp</dimen>
     <dimen name="elevation_wtf">8dp</dimen>
 
-    <dimen name="image_medium">48dp</dimen>
+    <dimen name="image_medium">36dp</dimen>
 
     <dimen name="text_micro">12sp</dimen>
     <dimen name="text_small">14sp</dimen>

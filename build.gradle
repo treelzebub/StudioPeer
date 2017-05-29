@@ -4,7 +4,7 @@ buildscript {
         gradle_plugin   = '3.0.0-alpha2'
         build_tools     = '26.0.0-rc2'
         kotlin_version  = '1.1.2-4'
-        support_version = '25.3.1'
+        support_version = '26.0.0-beta1'
         play_services   = '10.2.6'
         arch_components = '1.0.0-alpha1'
     }

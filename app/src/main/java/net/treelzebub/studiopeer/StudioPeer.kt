@@ -9,7 +9,6 @@ import net.treelzebub.studiopeer.auth.StudioPeerAuthListener
 import net.treelzebub.studiopeer.env.DevelopEnv
 import net.treelzebub.studiopeer.env.StudioPeerEnv
 import net.treelzebub.studiopeer.time.initAsync
-import org.jetbrains.anko.doAsync
 
 /**
  * Created by Tre Murillo on 5/28/17
@@ -33,7 +32,12 @@ object StudioPeer {
         StudioPeerEnv.init(DevelopEnv(BuildConfig::class.java))
         if (!StudioPeerEnv.instance.isTest) {
             JodaTimeAndroid.init(app)
-            TrueTime.build().initAsync()
+            TrueTime.build()
+                    .withNtpHost("time.apple.com")
+                    .withConnectionTimeout(30_000)
+                    .withSharedPreferences(app)
+                    .withLoggingEnabled(true)
+                    .initAsync()
         }
         StudioPeerAuth.listen(StudioPeerAuthListener(app))
 

@@ -11,12 +11,12 @@ kotlin {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 'android-O'
     buildToolsVersion build_tools
     defaultConfig {
         applicationId "net.treelzebub.studiopeer"
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion "O"
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -62,6 +62,7 @@ dependencies {
     })
     testCompile "org.robolectric:robolectric:3.3.2"
     testCompile 'junit:junit:4.12'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 repositories {
     mavenCentral()

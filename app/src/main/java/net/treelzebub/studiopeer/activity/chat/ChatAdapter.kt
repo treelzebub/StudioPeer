@@ -5,12 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.database.DataSnapshot
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_text_message_sent.view.*
+import kotlinx.android.synthetic.main.test_chat_item.view.*
 import net.treelzebub.knapsack.extensions.inflate
 import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.android.users.StudioPeerUsers
 import net.treelzebub.studiopeer.database.CollectionTypeIndicators
 import net.treelzebub.studiopeer.model.impls.TextMessage
+import net.treelzebub.studiopeer.time.DateTimes
 import net.treelzebub.studiopeer.view.picasso.CircleTransform
 
 /**
@@ -37,7 +38,8 @@ class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Ad
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val layout = if (viewType == 0) R.layout.item_text_message_sent else R.layout.item_text_message_received
+        val layout = R.layout.test_chat_item
+//        val layout = if (viewType == 0) R.layout.item_text_message_sent else R.layout.item_text_message_received
         return VH(parent.inflate(layout))
     }
 
@@ -55,11 +57,12 @@ class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Ad
 
     inner class VH(private val v: View) : RecyclerView.ViewHolder(v) {
         fun set(message: TextMessage) {
-            v.message.text = message.text
             Picasso.with(v.context)
                    .load(message.avatarUrl)
                    .transform(CircleTransform())
                    .into(v.avatar)
+            v.message.text = message.text
+            v.time.text = DateTimes.printLocalTime(message.createdAt)
         }
     }
 }
