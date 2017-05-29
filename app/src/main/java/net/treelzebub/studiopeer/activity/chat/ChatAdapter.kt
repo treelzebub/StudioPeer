@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.database.DataSnapshot
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.test_chat_item.view.*
+import kotlinx.android.synthetic.main.item_text_message_received.view.*
 import net.treelzebub.knapsack.extensions.inflate
 import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.android.users.StudioPeerUsers
@@ -38,8 +38,7 @@ class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Ad
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VH {
-        val layout = R.layout.test_chat_item
-//        val layout = if (viewType == 0) R.layout.item_text_message_sent else R.layout.item_text_message_received
+        val layout = if (viewType == 0) R.layout.item_text_message_sent else R.layout.item_text_message_received
         return VH(parent.inflate(layout))
     }
 

@@ -1,39 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
     android:background="@color/bg_light"
-    android:padding="@dimen/margin_medium">
+    android:orientation="horizontal"
+    android:clipToPadding="false"
+    android:paddingBottom="@dimen/margin_medium"
+    android:paddingTop="@dimen/margin_medium">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="@dimen/image_medium"
+        android:layout_height="@dimen/image_medium"
+        android:orientation="vertical"
+        android:src="@mipmap/ic_launcher"
+        android:translationZ="@dimen/margin_medium"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cardView"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/cardView"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintVertical_bias="0.156" />
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="@dimen/image_medium"
-            android:layout_height="@dimen/image_medium"
-            android:layout_marginEnd="@dimen/margin_medium"
-            android:src="@mipmap/ic_launcher" />
+        android:layout_marginEnd="@dimen/margin_xlarge"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:elevation="@dimen/elevation_low"
+        app:cardCornerRadius="@dimen/margin_min">
 
-        <TextView
-            android:id="@+id/time"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:layout_marginTop="@dimen/margin_min"
-            android:textColor="@color/grey_600"
-            android:textSize="@dimen/text_micro"
-            tools:text="4:30 am"/>
-    </LinearLayout>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="@dimen/margin_medium">
 
-    <TextView
-        android:id="@+id/message"
-        android:layout_width="0px"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="end"
-        tools:text="Hello, world. I am a chat message and I am potentially really long, but ultimately we want to show all of this text and maybe at some point implement some kind of limit on how long this message can be, but for now this is okay." />
-</LinearLayout>
+            <TextView
+                android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/margin_medium"
+                android:gravity="start"
+                tools:text="Hello, world. I am a chat message and I am potentially really long, but ultimately we want to show all of this text and maybe at some point implement some kind of limit on how long this message can be, but for now this is okay." />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:layout_marginTop="@dimen/margin_small"
+                android:ellipsize="end"
+                android:textColor="@color/text_lightest"
+                android:textSize="@dimen/text_micro"
+                tools:text="4:30 am" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</android.support.constraint.ConstraintLayout>
