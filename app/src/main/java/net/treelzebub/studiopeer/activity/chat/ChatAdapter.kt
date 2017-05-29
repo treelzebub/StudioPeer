@@ -19,8 +19,10 @@ class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Ad
     private var list = listOf<TextMessage>()
 
     fun set(snapshot: DataSnapshot) {
-        list = snapshot.getValue(CollectionTypeIndicators.getTextMessages)
-                .values
+        val count = snapshot.childrenCount
+        if (count == 0L) return
+        val new = snapshot.getValue(CollectionTypeIndicators.getTextMessages)
+        list = new.values
                 .sortedBy { it.createdAt }
                 .toMutableList()
         notifyDataSetChanged()

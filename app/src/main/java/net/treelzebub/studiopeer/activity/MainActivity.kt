@@ -3,7 +3,6 @@ package net.treelzebub.studiopeer.activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Toast
 import com.google.android.gms.auth.api.Auth
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
@@ -13,14 +12,15 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.GoogleApiClient
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.gson.GsonBuilder
+import kotlinx.android.synthetic.main.activity_main.*
+import net.treelzebub.knapsack.extensions.setGone
 import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.TAG
 import net.treelzebub.studiopeer.activity.chat.StudioPeerChatActivity
-import net.treelzebub.studiopeer.activity.tracklist.TracklistActivity
-import net.treelzebub.studiopeer.android.users.StudioPeerUsers
 import net.treelzebub.studiopeer.auth.AuthState
-import net.treelzebub.studiopeer.bindView
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 
 class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedListener {
 
@@ -36,32 +36,33 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
     }
     private val googleApiClient by lazy {
         GoogleApiClient.Builder(this)
-                .enableAutoManage(this, this)
+//                .enableAutoManage(this, this)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build()
     }
-
-    private val button by bindView<View>(R.id.button)
-    private val signIn by bindView<View>(R.id.sign_in_button)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         if (AuthState.isAuthed) {
-            signIn.visibility = View.GONE
-            Toast.makeText(this, "Signed In!", Toast.LENGTH_SHORT).show()
+            sign_in.setGone()
+            toast("Signed In!")
         }
 
-        signIn.setOnClickListener {
+        sign_in.setOnClickListener {
             val signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient)
             startActivityForResult(signInIntent, REQUEST_SIGN_IN)
         }
         button.setOnClickListener {
             startActivity<StudioPeerChatActivity>()
         }
+        sign_out.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+        }
     }
 
     override fun onConnectionFailed(result: ConnectionResult) {
+        toast("Connection Failed")
     }
 
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
@@ -77,7 +78,7 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
                     // signed in user can be handled in the listener.
                     if (!task.isSuccessful) {
                         Log.w(TAG, "signInWithCredential", task.exception)
-                        Toast.makeText(this, "Authentication failed.", Toast.LENGTH_SHORT).show()
+                        toast("Authentication failed.")
                     }
                     // ...
                 }
@@ -85,10 +86,11 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
 
     private fun handleSignInResult(result: GoogleSignInResult) {
         Log.d(TAG, "Sign in successful: ${result.isSuccess}")
+        if (!result.isSuccess) Log.d(TAG, GsonBuilder().setPrettyPrinting().create().toJson(result))
         result.signInAccount?.let {
             Log.d(TAG, it.displayName + " " + it.email)
             firebaseAuthWithGoogle(it)
-        } ?: Toast.makeText(this, "Sign in failed.", Toast.LENGTH_SHORT).show()
+        } ?: toast("Sign in failed.")
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {

@@ -8,7 +8,6 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator
 import kotlinx.android.synthetic.main.activity_chat.*
 import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.activity.StudioPeerActivity
-import net.treelzebub.studiopeer.android.dismissKeyboard
 import net.treelzebub.studiopeer.chat.StudioPeerChats
 import net.treelzebub.studiopeer.database.DefaultValueEventListener
 
@@ -19,12 +18,13 @@ import net.treelzebub.studiopeer.database.DefaultValueEventListener
  */
 class StudioPeerChatActivity : StudioPeerActivity() {
 
-    // TODO handle with Lifecycle components
-    private val chatRef = StudioPeerChats.reference
+    // TODO handle db reference with Lifecycle components
+    private val trackName = "My Recording" // TODO intent extra
+    private val chatRef   = StudioPeerChats.reference.child(trackName)
+
     private val adapter by lazy {
         ChatAdapter { recycler.smoothScrollToPosition(it) }
     }
-    private val trackName = "My Recording" // TODO intent extra
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +53,6 @@ class StudioPeerChatActivity : StudioPeerActivity() {
             }
         })
         send.setOnClickListener {
-            dismissKeyboard()
             StudioPeerChats.send(trackName, input.text.toString())
             input.setText("")
         }
