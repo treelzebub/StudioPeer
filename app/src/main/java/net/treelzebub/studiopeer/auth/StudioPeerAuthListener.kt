@@ -1,11 +1,10 @@
-package net.treelzebub.studiopeer.lifecycle
+package net.treelzebub.studiopeer.auth
 
 import android.content.Context
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import net.treelzebub.studiopeer.TAG
 import net.treelzebub.studiopeer.android.users.StudioPeerUsers
-import net.treelzebub.studiopeer.auth.isAuthed
 import net.treelzebub.studiopeer.contract.Intents
 
 

@@ -9,6 +9,7 @@ import net.treelzebub.studiopeer.model.DatabaseObject
 interface User : DatabaseObject {
     var name: String
     var email: String
+    var avatarUrl: String
 }
 
 class NoUserException(msg: String) : IllegalStateException(msg)

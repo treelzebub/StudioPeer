@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/margin_medium">
+
+    <TextView
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="start"
+        tools:text="Hello, world. I am a chat message and I am potentially really long, but ultimately we want to show all of this text and maybe at some point implement some kind of limit on how long this message can be, but for now this is okay." />
+
+    <ImageView
+        android:layout_width="@dimen/image_medium"
+        android:layout_height="@dimen/image_medium"
+        android:layout_marginStart="@dimen/margin_medium"
+        android:src="@mipmap/ic_launcher" />
+
+</LinearLayout>

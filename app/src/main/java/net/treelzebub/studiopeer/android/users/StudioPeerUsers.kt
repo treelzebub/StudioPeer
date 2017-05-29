@@ -8,16 +8,18 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import net.treelzebub.studiopeer.TAG
 import net.treelzebub.studiopeer.database.CollectionTypeIndicators
+import net.treelzebub.studiopeer.database.Path
+import net.treelzebub.studiopeer.database.Referenced
 import net.treelzebub.studiopeer.database.StudioPeerDb
 
 
 /**
  * Created by Tre Murillo on 5/28/17
  */
-object StudioPeerUsers {
+object StudioPeerUsers : Referenced {
 
-    private const val path = "users"
-    private val dbRef = StudioPeerDb.reference(path)
+    override val path = Path.of("users")
+    override val reference = StudioPeerDb.reference(path)
 
     var mockUser: User? = null
     var user: User? = null //mockUser //?: FirebaseAuth.getInstance().currentUser?.let { /*StudioPeerUser.create(it)*/ }

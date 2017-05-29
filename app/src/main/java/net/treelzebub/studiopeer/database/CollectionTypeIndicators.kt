@@ -2,6 +2,7 @@ package net.treelzebub.studiopeer.database
 
 import com.google.firebase.database.GenericTypeIndicator
 import net.treelzebub.studiopeer.android.users.StudioPeerUser
+import net.treelzebub.studiopeer.model.impls.TextMessage
 
 
 /**
@@ -11,8 +12,10 @@ import net.treelzebub.studiopeer.android.users.StudioPeerUser
  */
 
 typealias UsersMap = Map<String, @JvmSuppressWildcards StudioPeerUser>
+typealias ChatMap = Map<String, @JvmSuppressWildcards TextMessage>
 
 object CollectionTypeIndicators {
 
     val getAllUsers = object : GenericTypeIndicator<UsersMap>() {}
+    val getTextMessages = object : GenericTypeIndicator<ChatMap>() {}
 }

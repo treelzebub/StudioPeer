@@ -4,14 +4,19 @@ import android.app.Application
 import android.content.Context
 import net.danlew.android.joda.JodaTimeAndroid
 import net.treelzebub.studiopeer.auth.StudioPeerAuth
+import net.treelzebub.studiopeer.auth.StudioPeerAuthListener
 import net.treelzebub.studiopeer.env.DevelopEnv
 import net.treelzebub.studiopeer.env.StudioPeerEnv
-import net.treelzebub.studiopeer.lifecycle.StudioPeerAuthListener
 
 /**
  * Created by Tre Murillo on 5/28/17
  */
 object StudioPeer {
+
+    /**
+     * Set this before building for a specific client.
+     */
+    val studioName = "Develop"
 
     lateinit var context: Context
         private set

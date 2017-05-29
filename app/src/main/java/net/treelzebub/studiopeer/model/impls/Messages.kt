@@ -1,47 +1,58 @@
 package net.treelzebub.studiopeer.model.impls
 
-import net.treelzebub.studiopeer.database.StudioPeerDb
-import net.treelzebub.studiopeer.model.DatabaseObject.Companion.DEFAULT_LONG
-import net.treelzebub.studiopeer.model.DatabaseObject.Companion.DEFAULT_STRING
 import net.treelzebub.studiopeer.model.entities.Message
+import kotlin.properties.Delegates
 
 
 /**
  * Created by Tre Murillo on 5/27/17
  */
 
-data class TextMessage(
-        override var id: String          = DEFAULT_STRING,
-        override var userId: String      = DEFAULT_STRING,
-        override var createdAt: Long     = DEFAULT_LONG,
-        override var lastUpdatedAt: Long = DEFAULT_LONG,
-        override var chatId: String      = DEFAULT_STRING,
-        /**
-         * Text content entered by the user. A regular ol' chat message.
-         */
-        var text: String                 = DEFAULT_STRING
-) : Message
+class TextMessage() : Message {
 
-// https://firebase.google.com/docs/storage/android/download-files
-data class AttachmentMessage(
-        override var id: String          = DEFAULT_STRING,
-        override var userId: String      = DEFAULT_STRING,
-        override var createdAt: Long     = DEFAULT_LONG,
-        override var lastUpdatedAt: Long = DEFAULT_LONG,
-        override var chatId: String      = DEFAULT_STRING,
-        /**
-         * The directory in Firebase Storage.
-         */
-        val dir: String                  = DEFAULT_STRING,
+    constructor(id: String, userId: String, createdAt: Long, lastUpdatedAt: Long, chatId: String, text: String, avatarUrl: String) : this() {
+        this.id = id
+        this.userId = userId
+        this.createdAt = createdAt
+        this.lastUpdatedAt = lastUpdatedAt
+        this.chatId = chatId
+        this.text = text
+        this.avatarUrl = avatarUrl
+    }
 
-        /**
-         * The name of the file, which must exist in [dir].
-         */
-        val filename: String             = DEFAULT_STRING
-) : Message {
+    override lateinit var id: String
+    override lateinit var userId: String
+    override var createdAt: Long by Delegates.notNull()
+    override var lastUpdatedAt: Long by Delegates.notNull()
+    override lateinit var chatId: String
+    override lateinit var avatarUrl: String
+
     /**
-     * Pass this to [StudioPeerDb]'s CRUD as the path argument, then call getFile().
+     * Text content entered by the user. A regular ol' chat message.
      */
-    val path: String
-        get() = "$dir/$filename"
+    lateinit var text: String
 }
+//
+//// https://firebase.google.com/docs/storage/android/download-files
+//data class AttachmentMessage(
+//        override var id: String          = DEFAULT_STRING,
+//        override var userId: String      = DEFAULT_STRING,
+//        override var createdAt: Long     = DEFAULT_LONG,
+//        override var lastUpdatedAt: Long = DEFAULT_LONG,
+//        override var chatId: String      = DEFAULT_STRING,
+//        /**
+//         * The directory in Firebase Storage.
+//         */
+//        val dir: String                  = DEFAULT_STRING,
+//
+//        /**
+//         * The name of the file, which must exist in [dir].
+//         */
+//        val filename: String             = DEFAULT_STRING
+//) : Message {
+//    /**
+//     * Pass this to [StudioPeerDb]'s CRUD as the path argument, then call getFile().
+//     */
+//    val path: String
+//        get() = "$dir/$filename"
+//}
