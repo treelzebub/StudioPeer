@@ -14,7 +14,7 @@ import net.treelzebub.studiopeer.database.DefaultValueEventListener
 /**
  * Created by Tre Murillo on 5/28/17
  *
- * A Chat associated with a specific Track. Probably migrate to Fragment at somepoint.
+ * A Chat associated with a specific Track. Probably migrate to Fragment at some point.
  */
 class StudioPeerChatActivity : StudioPeerActivity() {
 
