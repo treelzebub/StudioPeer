@@ -20,6 +20,8 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.chat.StudioPeerChatActivity" />
+
         <activity android:name=".activity.tracklist.TracklistActivity" />
     </application>
 

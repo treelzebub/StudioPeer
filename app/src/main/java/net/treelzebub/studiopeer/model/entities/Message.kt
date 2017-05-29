@@ -18,4 +18,9 @@ interface Message : DatabaseObject {
      * The ID of the user who sent this Message. Supplied by FirebaseUser.
      */
     val userId: String
+
+    /**
+     * Hack the avatar url in here so we don't have to do two queries on every new message.
+     */
+    val avatarUrl: String
 }

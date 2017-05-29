@@ -15,10 +15,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.TAG
+import net.treelzebub.studiopeer.activity.chat.StudioPeerChatActivity
 import net.treelzebub.studiopeer.activity.tracklist.TracklistActivity
 import net.treelzebub.studiopeer.android.users.StudioPeerUsers
 import net.treelzebub.studiopeer.auth.AuthState
 import net.treelzebub.studiopeer.bindView
+import org.jetbrains.anko.startActivity
 
 class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedListener {
 
@@ -55,7 +57,7 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
             startActivityForResult(signInIntent, REQUEST_SIGN_IN)
         }
         button.setOnClickListener {
-            StudioPeerUsers.getAll()
+            startActivity<StudioPeerChatActivity>()
         }
     }
 
