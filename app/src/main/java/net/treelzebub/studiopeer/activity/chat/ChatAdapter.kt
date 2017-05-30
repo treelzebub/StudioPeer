@@ -1,11 +1,12 @@
 package net.treelzebub.studiopeer.activity.chat
 
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import com.google.firebase.database.DataSnapshot
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.item_text_message_received.view.*
+import kotlinx.android.synthetic.main.item_text_message_sent.view.*
 import net.treelzebub.knapsack.extensions.inflate
 import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.android.users.StudioPeerUsers
@@ -24,7 +25,6 @@ class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Ad
     init { setHasStableIds(true) }
 
     private var list = listOf<TextMessage>()
-
     fun set(snapshot: DataSnapshot) {
         val count = snapshot.childrenCount
         if (count == 0L) return
@@ -48,20 +48,19 @@ class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Ad
 
     override fun getItemCount() = list.size
 
-    private val myId = StudioPeerUsers.user!!.id
-    override fun getItemViewType(position: Int): Int {
-        val userId = list[position].userId
-        return if (userId == myId) 0 else 1
-    }
+    override fun getItemId(position: Int) = list[position].createdAt
 
-    inner class VH(private val v: View) : RecyclerView.ViewHolder(v) {
-        fun set(message: TextMessage) {
+    private val myId = StudioPeerUsers.user!!.id
+    override fun getItemViewType(position: Int) = if (list[position].userId == myId) 0 else 1
+
+    class VH(private val v: View) : RecyclerView.ViewHolder(v) {
+        fun set(textMessage: TextMessage) {
             Picasso.with(v.context)
-                   .load(message.avatarUrl)
+                   .load(textMessage.avatarUrl)
                    .transform(CircleTransform())
                    .into(v.avatar)
-            v.message.text = message.text
-            v.time.text = DateTimes.printLocalTime(message.createdAt)
+            v.message.text = textMessage.text
+            v.time.text = DateTimes.printLocalTime(textMessage.createdAt)
         }
     }
 }

@@ -33,7 +33,6 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
         GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
-                .requestId()
                 .build()
     }
     private val googleApiClient by lazy {
@@ -49,6 +48,7 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
 
         if (AuthState.isAuthed) {
             hideSignIn()
+            startActivity<StudioPeerChatActivity>()
             toast("Signed In!")
         }
 

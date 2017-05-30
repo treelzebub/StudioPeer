@@ -21,7 +21,7 @@ import kotlinx.coroutines.experimental.launch
 private var tries = 0
 private const val TAG = "TrueTime"
 fun TrueTime.initAsync() {
-    val deferred = launch(CommonPool) {
+    launch(CommonPool) {
         Log.d(TAG, "init...")
         initialize()
     }.invokeOnCompletion {

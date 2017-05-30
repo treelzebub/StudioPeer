@@ -18,7 +18,7 @@ import net.treelzebub.studiopeer.view.onTextChanged
 class StudioPeerChatActivity : StudioPeerActivity() {
 
     // TODO handle db reference with Lifecycle components
-    private val trackName = "My Recording" // TODO intent extra
+    private val trackName = "Debug" // TODO intent extra
     private val chatRef   = StudioPeerChats.reference.child(trackName)
 
     private val adapter by lazy {
