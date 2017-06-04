@@ -1,35 +1,47 @@
 package net.treelzebub.studiopeer.storage
 
-import android.content.Context
 import android.util.Log
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageMetadata
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import net.treelzebub.studiopeer.R
+import net.treelzebub.studiopeer.StudioPeer
 import net.treelzebub.studiopeer.TAG
+import java.io.File
+import java.io.FileInputStream
 
-// assumes authed user... TODO
 object StudioPeerStorage {
 
+    private val firebase = FirebaseStorage.getInstance()
 
-    private val storage = FirebaseStorage.getInstance()
+    val HOME_DIR = "studio_peer/${StudioPeer.studioName}"
 
-    private fun home(c: Context) = c.getString(R.string.studio_peer_home_directory)
+    // Returns a list of downloadUrls
+//    fun ls(): List<String> {
+//        reference.
+//    }
 
-    fun reference(c: Context, filename: String): StorageReference {
-        return storage.reference.child("${home(c)}/$filename")
+    fun reference(filename: String): StorageReference {
+        "asdf".reversed()
+        return firebase.reference.child("$HOME_DIR/$filename")
+    }
+
+    fun upload(file: File, metadata: StorageMetadata?): UploadTask {
+        return upload(file.name, file.toBytes()!!, metadata)
+    }
+
+    fun uploadStream(file: File, metadata: StorageMetadata?): UploadTask {
+        return reference(file.name).putStream(FileInputStream(file))
     }
 
     /**
      * Overwrites without prompt
      */
-    fun upload(c: Context, filename: String, bytes: ByteArray, metadata: StorageMetadata?): UploadTask {
+    fun upload(filename: String, bytes: ByteArray, metadata: StorageMetadata?): UploadTask {
         val task = if (metadata != null) {
-            reference(c, filename).putBytes(bytes, metadata)
+            reference(filename).putBytes(bytes, metadata)
         } else {
-            reference(c, filename).putBytes(bytes)
+            reference(filename).putBytes(bytes)
         }
         return task.apply {
             addOnSuccessListener {
@@ -47,6 +59,13 @@ object StudioPeerStorage {
         // Cancel the upload
         //    uploadTask.cancel();
     }
+
+    /**
+     * Check FirebaseStorage for a file of this name.
+     * @return the task that is reading the contents of the StorageReference.
+     */
+    fun checkExists(filename: String) { TODO() }
+
 
     // Example code:
 //    val storage = FirebaseStorage.getInstance()

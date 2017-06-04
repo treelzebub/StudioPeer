@@ -19,6 +19,7 @@ import net.treelzebub.studiopeer.TAG
 import net.treelzebub.studiopeer.activity.chat.StudioPeerChatActivity
 import net.treelzebub.studiopeer.auth.AuthState
 import net.treelzebub.studiopeer.auth.StudioPeerAuth
+import net.treelzebub.studiopeer.storage.StorageTestActivity
 import net.treelzebub.studiopeer.view.onNextLayout
 import org.jetbrains.anko.startActivity
 import org.jetbrains.anko.toast
@@ -48,7 +49,7 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
 
         if (AuthState.isAuthed) {
             hideSignIn()
-            startActivity<StudioPeerChatActivity>()
+            startActivity<StorageTestActivity>()
             toast("Signed In!")
         }
 
@@ -57,7 +58,8 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
             startActivityForResult(signInIntent, REQUEST_SIGN_IN)
         }
         button.setOnClickListener {
-            startActivity<StudioPeerChatActivity>()
+//            startActivity<StudioPeerChatActivity>()
+            startActivity<StorageTestActivity>()
         }
         sign_out.setOnClickListener {
             StudioPeerAuth.logOut()

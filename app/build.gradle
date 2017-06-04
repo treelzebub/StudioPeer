@@ -2,8 +2,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-//apply plugin: 'kotlin'
-
 kotlin {
     experimental {
         coroutines 'enable'
@@ -11,12 +9,12 @@ kotlin {
 }
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion target_sdk
     buildToolsVersion build_tools
     defaultConfig {
         applicationId "net.treelzebub.studiopeer"
-        minSdkVersion 21
-        targetSdkVersion 25
+        minSdkVersion min_sdk
+        targetSdkVersion target_sdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -37,7 +35,7 @@ dependencies {
     compile "com.google.firebase:firebase-auth:$play_services"
     compile "com.google.firebase:firebase-database:$play_services"
     compile "com.google.firebase:firebase-storage:$play_services"
-    
+
     compile "android.arch.lifecycle:runtime:$arch_components"
     compile "android.arch.lifecycle:extensions:$arch_components"
     annotationProcessor "android.arch.lifecycle:compiler:$arch_components"
@@ -45,7 +43,8 @@ dependencies {
     compile "com.android.support:appcompat-v7:$support_version"
     compile "com.android.support:recyclerview-v7:$support_version"
     compile "com.android.support:cardview-v7:$support_version"
-    compile ("org.jetbrains.anko:anko:0.10.0") {
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile("org.jetbrains.anko:anko:0.10.0") {
         exclude group: 'com.google.android', module: 'android'
     }
 
@@ -56,6 +55,8 @@ dependencies {
     compile 'com.github.treelzebub:knapsack:0.3'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'jp.wasabeef:recyclerview-animators:2.2.6'
+    compile 'com.kingfisherphuoc:easy-file-folder-picker-dialog:1.2'
+    compile 'com.github.piasy:AudioProcessor:1.5.2'
 
     androidTestCompile 'com.android.support.test:runner:0.5'
     androidTestCompile 'com.android.support.test:rules:0.5'
@@ -63,10 +64,8 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     }
-
     testCompile "org.robolectric:robolectric:3.3.2"
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
 repositories {
     mavenCentral()
