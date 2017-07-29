@@ -58,8 +58,8 @@ dependencies {
     compile 'com.kingfisherphuoc:easy-file-folder-picker-dialog:1.2'
     compile 'com.github.piasy:AudioProcessor:1.5.2'
 
-    androidTestCompile 'com.android.support.test:runner:0.5'
-    androidTestCompile 'com.android.support.test:rules:0.5'
+    androidTestCompile 'com.android.support.test:runner:1.0.0'
+    androidTestCompile 'com.android.support.test:rules:1.0.0'
     androidTestCompile "com.android.support:support-annotations:$support_version"
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
