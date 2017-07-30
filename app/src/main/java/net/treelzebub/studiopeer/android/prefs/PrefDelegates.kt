@@ -10,14 +10,13 @@ import kotlin.reflect.KProperty
  */
 
 
-inline fun <reified T: Any> sharedPref(key: String? = null, global: Boolean = false): PrefDelegate<T> {
+inline fun <reified T: Any> Any.sharedPref(key: String? = null, global: Boolean = false): PrefDelegate<T> {
     return PrefDelegate(T::class.java, key, global)
 }
 
 class PrefDelegate<T: Any>(private val cls: Class<T>, val key: String?, val global: Boolean) : ReadWriteProperty<Any, T?> {
 
-    private val context = StudioPeer.context
-    private val sharedPrefs = context.sharedPrefs()
+    private val sharedPrefs = StudioPeer.getSharedPreferences()
 
     /**
      * By default, [notNull] will not update your prefs with [defaultValue].

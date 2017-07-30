@@ -29,7 +29,7 @@ class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Ad
         val count = snapshot.childrenCount
         if (count == 0L) return
         val new = snapshot.getValue(CollectionTypeIndicators.getTextMessages)
-        list = new.values
+        list = new!!.values
                 .sortedBy { it.createdAt }
                 .toMutableList()
         val last = list.lastIndex

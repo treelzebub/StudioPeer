@@ -14,16 +14,26 @@ import org.robolectric.RuntimeEnvironment
 @RunWith(RobolectricTestRunner::class)
 class SharedPrefsTests {
 
+    init {
+        val isInit = StudioPeer::class.java
+                .getDeclaredField("isInit")
+                .apply { isAccessible = true }
+                .get(null) as Boolean
+        if (!isInit) {
+            StudioPeer.init(RuntimeEnvironment.application)
+        }
+    }
+
     private val baseDelegate = sharedPref<String>("foo", true)
 
-    private var fooBasic: String? by baseDelegate
-    private var fooNotNull: String by baseDelegate.notNull("bar")
+    private var fooBasic: String?    by baseDelegate
+    private var fooNotNull: String   by baseDelegate.notNull("bar")
     private var fooWriteback: String by baseDelegate.notNull("bar", true)
 
     @Test
     @SuppressLint("ApplySharedPref")
     fun testBasicTypes() {
-        val prefs = StudioPeerPrefs.basePrefs(RuntimeEnvironment.application)
+        val prefs = StudioPeer.getSharedPreferences()
         val edit = prefs.edit()
         edit.clear().commit()
 
@@ -44,7 +54,6 @@ class SharedPrefsTests {
 
     @Test
     fun testDelegate() {
-        StudioPeer.init(RuntimeEnvironment.application)
         assertEquals(null, fooBasic)
         assertEquals("bar", fooNotNull)
         assertEquals(null, fooBasic)

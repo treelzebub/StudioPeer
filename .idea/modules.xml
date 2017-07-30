@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/StudioPeer.iml" filepath="$PROJECT_DIR$/StudioPeer.iml" />
-      <module fileurl="file://C:\Users\treelzebub\Projects\StudioPeer\StudioPeer.iml" filepath="C:\Users\treelzebub\Projects\StudioPeer\StudioPeer.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\treelzebub\Projects\StudioPeer\app\app.iml" filepath="C:\Users\treelzebub\Projects\StudioPeer\app\app.iml" />
     </modules>
   </component>
 </project>

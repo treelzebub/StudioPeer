@@ -24,7 +24,7 @@ fun View.onNextLayout(fn: () -> Unit) {
 }
 
 fun Activity.onNextLayout(fn: () -> Unit) {
-    findViewById(android.R.id.content).onNextLayout(fn)
+    findViewById<View>(android.R.id.content).onNextLayout(fn)
 }
 
 fun Fragment.onNextLayout(fn: () -> Unit) {
