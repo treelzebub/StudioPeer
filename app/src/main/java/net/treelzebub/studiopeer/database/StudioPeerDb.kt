@@ -1,5 +1,6 @@
 package net.treelzebub.studiopeer.database
 
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.database.*
 import net.treelzebub.studiopeer.model.DatabaseObject
@@ -23,6 +24,7 @@ object StudioPeerDb {
     fun <T : DatabaseObject> write(path: String, obj: T): Task<Void> {
         // TODO it'd be a whole lot cooler to have the db fill the lastUpdatedAt field, but then
         //      we'd have to read from the db after every write...hmmmmmm
+        //      basically we need the `touch` command
         obj.lastUpdatedAt = DateTimes.now
         return reference.child(path).child(obj.id).setValue(obj)
     }
