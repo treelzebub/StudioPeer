@@ -11,12 +11,12 @@ kotlin {
 }
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion compile_sdk
     buildToolsVersion build_tools
     defaultConfig {
         applicationId "net.treelzebub.studiopeer"
-        minSdkVersion 21
-        targetSdkVersion 26
+        minSdkVersion min_sdk
+        targetSdkVersion target_sdk
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
