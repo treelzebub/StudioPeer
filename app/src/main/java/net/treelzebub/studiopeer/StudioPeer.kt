@@ -2,6 +2,7 @@ package net.treelzebub.studiopeer
 
 import android.app.Application
 import android.content.Context
+import android.content.SharedPreferences
 import com.instacart.library.truetime.TrueTime
 import net.danlew.android.joda.JodaTimeAndroid
 import net.treelzebub.studiopeer.auth.StudioPeerAuth
@@ -10,6 +11,8 @@ import net.treelzebub.studiopeer.env.DevelopEnv
 import net.treelzebub.studiopeer.env.StudioPeerEnv
 import net.treelzebub.studiopeer.runtime.Stability
 import net.treelzebub.studiopeer.time.initAsync
+import org.jetbrains.anko.defaultSharedPreferences
+import java.lang.ref.WeakReference
 
 /**
  * Created by Tre Murillo on 5/28/17
@@ -21,7 +24,7 @@ object StudioPeer {
      */
     val studioName = "Develop"
 
-    lateinit var context: Context
+    lateinit var context: WeakReference<Context>
         private set
 
     private var isInit = false
@@ -29,7 +32,7 @@ object StudioPeer {
     fun init(app: Application) {
         if (isInit) throw RuntimeException("StudioPeer has already been initialized.")
         isInit = true
-        context = app
+        context = WeakReference(app)
         Stability.onCrashLoop {
             StudioPeerAuth.logOut()
         }
@@ -42,11 +45,26 @@ object StudioPeer {
                     .withSharedPreferences(app)
                     .withLoggingEnabled(true)
                     .initAsync()
+            StudioPeerAuth.listen(StudioPeerAuthListener(app))
         }
-        StudioPeerAuth.listen(StudioPeerAuthListener(app))
 
         // TODO init env
         // TODO init lifecycle
         // TODO if debug, init logger
+    }
+
+    private const val SHARED_PREFS_NAME = "__studio_peer"
+    fun getSharedPreferences(global: Boolean = false, name: String? = null): SharedPreferences {
+        val c = try {
+            context.get()!!
+        } catch (e: Exception) {
+            throw NullPointerException("No application context.")
+        }
+        val name = name ?: SHARED_PREFS_NAME
+        return if (global) {
+            c.defaultSharedPreferences
+        } else {
+            c.getSharedPreferences(name, Context.MODE_PRIVATE)
+        }
     }
 }

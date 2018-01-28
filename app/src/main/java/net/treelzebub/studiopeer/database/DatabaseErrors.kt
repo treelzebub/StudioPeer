@@ -17,7 +17,7 @@ object DatabaseErrors {
         Log.e(TAG, error?.message ?: "No message")
         Log.e(TAG, error?.details ?: "No details")
         if (error?.toException() is DatabaseException) {
-            StudioPeer.context.toast("Database exception.")
+            StudioPeer.context.get()?.toast("Database exception.")
             return
         }
         throw error?.toException() ?: RuntimeException("Unhandled exception.")
