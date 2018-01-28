@@ -29,7 +29,7 @@ class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Ad
         val count = snapshot.childrenCount
         if (count == 0L) return
         val new = snapshot.getValue(CollectionTypeIndicators.getTextMessages)
-        list = new.values
+        list = new!!.values
                 .sortedBy { it.createdAt }
                 .toMutableList()
         val last = list.lastIndex
@@ -50,8 +50,7 @@ class ChatAdapter(private val scrollToPosition: (Int) -> Unit) : RecyclerView.Ad
 
     override fun getItemId(position: Int) = list[position].createdAt
 
-    private val myId = StudioPeerUsers.user!!.id
-    override fun getItemViewType(position: Int) = if (list[position].userId == myId) 0 else 1
+    override fun getItemViewType(position: Int) = if (list[position].userId == StudioPeerUsers.user?.id) 0 else 1
 
     class VH(private val v: View) : RecyclerView.ViewHolder(v) {
         fun set(textMessage: TextMessage) {

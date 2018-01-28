@@ -88,13 +88,16 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
     }
 
     private fun handleSignInResult(result: GoogleSignInResult) {
-        Log.d(TAG, "Sign in successful: ${result.isSuccess}")
-        if (!result.isSuccess) Log.d(TAG, result.status.statusMessage)
-        result.signInAccount?.let {
+        Log.d(TAG, "Sign in success? ${result.isSuccess}")
+        if (!result.isSuccess) {
+            Log.e(TAG, result.status.statusMessage)
+            return
+        }
+        result.signInAccount!!.let {
             Log.d(TAG, "Got user. Logging into Firebase.")
             firebaseAuthWithGoogle(it)
             hideSignIn()
-        } ?: toast("Sign in failed.")
+        }
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
@@ -106,5 +109,4 @@ class MainActivity : StudioPeerActivity(), GoogleApiClient.OnConnectionFailedLis
     }
 
     private fun hideSignIn() = onNextLayout { sign_in.setGone() }
-
 }

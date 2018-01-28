@@ -1,4 +1,3 @@
-
 buildscript {
     ext {
         gradle_plugin   = '3.0.1'

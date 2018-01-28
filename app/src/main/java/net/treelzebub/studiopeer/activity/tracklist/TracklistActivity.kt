@@ -3,21 +3,18 @@ package net.treelzebub.studiopeer.activity.tracklist
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import kotlinx.android.synthetic.main.activity_tracklist.*
 import net.treelzebub.studiopeer.R
 import net.treelzebub.studiopeer.activity.StudioPeerActivity
-import net.treelzebub.studiopeer.bindView
 
 class TracklistActivity : StudioPeerActivity() {
 
-    private val recycler by bindView<RecyclerView>(R.id.recycler)
-    private val adapter  = TrackAdapter()
+    private val adapter = TrackAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tracklist)
         setupRecycler()
-
     }
 
     private fun setupRecycler() {

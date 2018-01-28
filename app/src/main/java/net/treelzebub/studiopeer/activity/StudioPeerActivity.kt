@@ -1,7 +1,6 @@
 package net.treelzebub.studiopeer.activity
 
-import android.arch.lifecycle.LifecycleActivity
+import android.arch.lifecycle.LifecycleOwner
+import android.support.v7.app.AppCompatActivity
 
-abstract class StudioPeerActivity : LifecycleActivity() {
-
-}
+abstract class StudioPeerActivity : AppCompatActivity(), LifecycleOwner
